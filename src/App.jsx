@@ -1,45 +1,48 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Sidemenu, { menuItems } from './components/sidemenu/Sidemenu';
+import './App.css';
+
+const Dashboard = () => <h1>Dashboard</h1>;
+const Content = () => <h1>Content</h1>;
+const Courses = () => <h1>Content/Courses</h1>;
+const Videos = () => <h1>Content/Videos</h1>;
+const Design = () => <h1>Design</h1>;
+const Content2 = () => <h1>Content2</h1>;
+const Courses2 = () => <h1>Content/Courses 2</h1>;
+const Videos2 = () => <h1>Content/Videos 2</h1>;
+const Design2 = () => <h1>Design 2</h1>;
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [inactive, setInactive] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div className='App'>
+      <Router>
+        <Sidemenu
+          onCollapse={inactive => {
+            setInactive(inactive);
+          }}
+        />
+
+        <div className={`container ${inactive ? 'inactive' : ''}`}>
+          {menuItems.map((menu, index) => (
+            <>
+              {/* <Route key={menu.name} exact={menu.exact} path={menu.to}>
+                <h1>{menu.name}</h1>
+              </Route>
+              {menu.subMenus && menu.subMenus.length > 0
+                ? menu.subMenus.map((subMenu, i) => (
+                    <Route key={subMenu.name} path={subMenu.to}>
+                      <h1>{subMenu.name}</h1>
+                    </Route>
+                  ))
+                : null} */}
+            </>
+          ))}
+        </div>
+      </Router>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
